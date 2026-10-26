@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RaporKu — Aplikasi Input e-Rapor SD</title>
+<style>
+:root{--navy:#102e59;--navy2:#173f78;--blue:#1976d2;--blue2:#2d83e8;--ink:#17345e;--muted:#6b82a4;--line:#d9e6f7;--pale:#eef5ff;--white:#fff;--shadow:0 8px 25px #163f7510}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(125deg,#f6f9ff,#edf4ff 55%,#f9fbff);font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--ink);font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{height:94px;background:rgba(255,255,255,.88);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:12px 28px;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:12px;min-width:240px}.brand-icon img,.brand-icon .tutwuri-mark{width:100%;height:100%;object-fit:contain;display:block;padding:5px;box-sizing:border-box}.brand-icon{width:54px;height:54px;border-radius:17px;background:linear-gradient(145deg,#1599dc,#1556a8);color:#fff;display:grid;place-items:center;font-size:29px;box-shadow:0 8px 18px #287ad22b}.brand h1{font-size:25px;letter-spacing:-.7px;margin:0;color:#164b83}.brand p{font-size:10px;line-height:1.45;letter-spacing:.15px;margin:2px 0 0;color:#607da4;font-weight:600}
+.school-head{margin-left:4px;display:flex;flex-direction:column;gap:5px}.school-head strong{font-size:15px;color:#12488e}.school-head span{font-size:12px;color:#55739e}
+.top-actions{margin-left:auto;display:flex;align-items:center;gap:10px}.theme-toggle{border:1px solid var(--line);border-radius:99px;padding:7px 12px;background:#eaf2ff;color:#3d5e8c}.user-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(145deg,#5c9feb,#1459b4);display:grid;place-items:center;color:#fff;font-size:20px}.user-info strong,.user-info small{display:block}.user-info strong{font-size:12px;color:#164887}.user-info small{font-size:10px;color:#6580a5;margin-top:3px}
+.app{display:grid;grid-template-columns:214px minmax(0,1fr);gap:18px;align-items:start;padding-right:18px}.sidebar{min-height:calc(100vh - 94px);position:sticky;top:94px;background:linear-gradient(180deg,#102b50,#173f75);padding:20px 12px 18px;margin:0 0 0 10px;border-radius:16px;display:flex;flex-direction:column;gap:7px;box-shadow:0 10px 28px #173e7018;border:1px solid #ffffff12}.nav-label{font-size:10px;letter-spacing:1.2px;color:#94b7e4;padding:10px 11px 5px;font-weight:800}.nav{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid transparent;border-radius:10px;background:transparent;color:#e1edff;font-weight:650;padding:12px 12px;font-size:12px;min-height:44px;transition:background .18s,border-color .18s,transform .18s}.nav:hover{background:#ffffff12;border-color:#ffffff18;transform:translateX(2px)}.nav.active{background:linear-gradient(100deg,#287de0,#1e5eb2);box-shadow:0 5px 14px #071e3d35,inset 3px 0 #a8d4ff;color:white;border-color:#70b3ff55}.nav .ico{font-size:18px;width:21px;text-align:center;flex:0 0 21px}.nav-divider{height:1px;background:#ffffff22;margin:9px 8px}.sidebar-foot{margin-top:auto;padding:22px 9px 8px;color:#c5d8f4;display:flex;gap:10px;align-items:center}.book-ico{font-size:35px}.sidebar-foot em{font-family:Georgia,serif;font-size:12px;line-height:1.5}
+main{padding:22px 4px 35px 0;min-width:0}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.stat{background:#fff;border:1px solid #e0eaf8;border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;min-height:108px;box-shadow:var(--shadow)}.stat-icon{width:53px;height:53px;border-radius:13px;display:grid;place-items:center;font-size:26px;flex:0 0 53px}.cyan{background:#d9fbff;color:#137a9a}.violet{background:#eee3ff;color:#7241d0}.green{background:#d9faeb;color:#14855d}.orange{background:#fff0d6;color:#dc831a}.stat span{font-size:11px;color:#3f5b81;display:block;margin-bottom:5px}.stat strong{font-size:24px;letter-spacing:-.5px;color:#122b4f;display:block;white-space:nowrap}.stat small{font-size:11px;color:#6a81a2;display:block;margin-top:4px}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 264px;gap:18px;align-items:start}.center-col{min-width:0}.right-col{display:flex;flex-direction:column;gap:14px}.panel{background:#fff;border:1px solid #dfe9f8;border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:15px}.panel h2{font-size:14px;color:#1555a0;margin:0 0 13px}.panel h3{font-size:12px;letter-spacing:.6px;color:#55729c;margin:18px 0 10px}.tabbar{display:flex;gap:6px;align-items:center;background:#edf4ff;border-radius:10px;padding:6px;margin-bottom:16px;overflow-x:auto}.tab{flex:1;white-space:nowrap;border:0;background:transparent;color:#365982;padding:11px 10px;border-radius:8px;font-weight:700;font-size:12px}.tab.active{background:linear-gradient(100deg,#1765bd,#187be0);color:#fff;box-shadow:0 4px 10px #1976d22b}
+.report{background:#fff;border:1px solid #a9c9f1;border-radius:6px;padding:18px 20px;color:#102d5b;box-shadow:0 4px 20px #255b9510;font-family:Arial,sans-serif;font-size:11px}.report-head{display:grid;grid-template-columns:82px 1fr;align-items:center;border-bottom:3px solid #6ca2df;padding-bottom:9px;margin-bottom:14px;gap:12px}.school-seal{width:72px;height:72px;border:0;border-radius:0;display:grid;place-items:center;background:transparent;font-size:37px;overflow:hidden}.school-seal img{width:100%;height:100%;object-fit:contain;padding:0;border:0;border-radius:0;background:transparent}.logo-preview{width:100px;height:100px;border:0;border-radius:0;display:grid;place-items:center;overflow:hidden;background:transparent;font-size:42px}.logo-preview img{width:100%;height:100%;object-fit:contain;padding:0;border:0;border-radius:0;background:transparent}.report-head-text{text-align:center;line-height:1.35}.report-head-text strong{font-size:12px;display:block}.report-head-text b{font-size:16px;display:block;color:#124e93;margin:3px 0}.report-title{text-align:center;font-size:15px;font-weight:800;margin:14px 0 4px}.report-year{text-align:center;font-size:12px;margin-bottom:14px}.identity{display:grid;grid-template-columns:1fr 1fr;border:1px solid #9ebfe9;border-radius:4px;padding:8px 10px;margin-bottom:12px}.identity div{display:grid;grid-template-columns:105px 10px 1fr;gap:3px;line-height:1.75}.identity div:nth-child(even){border-left:1px solid #c9d9ed;padding-left:12px}.rtable{width:100%;border-collapse:collapse;margin:8px 0 10px;table-layout:fixed;font-size:10px}.rtable th,.rtable td{border:1px solid #9ab9e1;padding:3px 4px;vertical-align:top;overflow-wrap:anywhere}.rtable th{background:#e6f0ff;text-align:center;font-weight:700}.rtable .col-no{width:24px}.rtable .col-subject{width:26%}.rtable .col-score{width:56px}.report-date{text-align:right;font-size:10px;margin:14px 8px 0}.rtable .section{text-align:center;background:#e6f0ff;font-weight:700}.blank-box{border:1px solid #9ab9e1;height:46px;margin-top:-12px;margin-bottom:12px}.report-two{display:grid;grid-template-columns:1fr 1.7fr;gap:10px}.attendance,.note-box{border:1px solid #9ab9e1}.attendance h4,.note-box h4{margin:0;background:#e6f0ff;border-bottom:1px solid #9ab9e1;text-align:center;padding:6px}.attendance p{margin:0;padding:5px 8px;border-bottom:1px solid #c6d7ec;display:flex;justify-content:space-between}.note-box .blank{height:70px}.promote{text-align:center;border:1px solid #9ab9e1;padding:8px;margin:10px 0;font-weight:700}.signature{display:grid;grid-template-columns:1fr 1fr 1fr;text-align:center;gap:8px;margin-top:15px;line-height:1.6;font-size:10px}.sign-space{height:40px}.report-footer{display:flex;justify-content:space-between;border-top:1px solid #b7cde8;margin-top:12px;padding-top:7px;font-size:9px}
+.field{margin-bottom:13px}.field label{display:block;font-weight:700;font-size:12px;color:#4d6281;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;border:1px solid #d8e2f0;border-radius:9px;background:#fbfcff;padding:11px 12px;color:#263d5e;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#68a2ec;box-shadow:0 0 0 3px #2d83e818}.field textarea{min-height:84px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.btn{border:0;border-radius:8px;padding:10px 13px;font-weight:750;font-size:12px;background:#edf3fb;color:#284b78}.btn-primary{background:linear-gradient(100deg,#1686dc,#3476e7);color:#fff}.btn-success{background:linear-gradient(100deg,#20b58e,#2eaa91);color:#fff}.btn-purple{background:linear-gradient(100deg,#9261e9,#7548d8);color:#fff}.btn-danger{background:#fff0f2;color:#d73e50;border:1px solid #ffd6dc}.btn-outline{background:#f0f6ff;border:1px solid #dce8f8;color:#24538f}.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.action-btn{display:flex;width:100%;align-items:center;gap:12px;text-align:left;margin-bottom:8px;padding:11px 13px;border-radius:9px;border:0;font-size:12px;font-weight:750}.action-icon svg,.heading-icon svg,.student-avatar svg{width:22px;height:22px;display:block}.heading-icon{display:inline-grid;place-items:center;color:#2e63b6;vertical-align:middle;margin-right:7px}.heading-icon svg{width:25px;height:25px}.action-btn .action-icon{width:54px;height:42px;flex:0 0 54px;display:grid;place-items:center;border-radius:8px;background:#00000010;font-size:16px}.action-btn.light{background:#f0f6ff;color:#24538f;border:1px solid #dce8f8}.action-btn.red{background:#fff0f2;color:#d73e50;border:1px solid #ffd6dc}.student-mini{display:flex;gap:11px;padding:12px;background:#eff6ff;border:1px solid #d7e7fc;border-radius:10px;margin-top:10px}.student-avatar{width:60px;height:60px;flex:0 0 60px;border-radius:50%;background:linear-gradient(140deg,#d8e8ff,#a8c9f5);display:grid;place-items:center;font-size:29px;color:#2765b4}.student-mini strong,.student-mini small{display:block}.student-mini strong{font-size:11px;color:#244c84;margin-bottom:5px}.student-mini small{font-size:10px;color:#4d6890;margin:3px 0}.quote{margin:0;padding:15px;border-radius:10px;background:#edf5ff;color:#4b6fa5;font-style:italic;font-size:12px;line-height:1.7}.quote-mark{font-size:30px;color:#2b7fd3;display:block;text-align:right;margin-top:4px}
+.page-title{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}.page-title h2{font-size:20px;margin:0 0 5px;color:#17365f}.page-title p{margin:0;color:#6a81a2;font-size:12px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}.data-table{width:100%;border-collapse:collapse;min-width:600px}.data-table th,.data-table td{padding:10px;border-bottom:1px solid #e7eef8;text-align:left;font-size:12px}.data-table th{background:#eff5ff;color:#315581}.data-table tr:last-child td{border-bottom:0}.empty{padding:25px;text-align:center;color:#7890af}.hidden{display:none!important}.notice{padding:11px 13px;border-radius:9px;background:#edf6ff;color:#41648e;font-size:12px;line-height:1.5;margin-bottom:13px}.small{font-size:11px;color:#6b82a4}.subject-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}.subject-item{border:1px solid var(--line);border-radius:9px;padding:10px;display:flex;align-items:center;gap:8px}.subject-item input{flex:1;min-width:0;border:1px solid #d8e2f0;border-radius:7px;padding:8px}.subject-item button{border:0;background:#fff0f2;color:#c53d51;border-radius:7px;padding:7px}.file-drop{border:2px dashed #c7d9f1;border-radius:12px;text-align:center;padding:25px;color:#607da4;background:#f8fbff}.file-drop input{margin-top:12px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#14365f;color:#fff;padding:12px 18px;border-radius:10px;box-shadow:0 8px 25px #102b5030;z-index:20;display:none;max-width:90vw}.toast.show{display:block}
+@media(max-width:1180px){.app{grid-template-columns:1fr;padding:0 12px}.sidebar{position:static;min-height:0;border-radius:14px;margin:10px 0 0;flex-direction:row;align-items:center;overflow-x:auto;padding:8px}.nav-label,.nav-divider,.sidebar-foot{display:none}.nav{width:auto;flex:0 0 auto;white-space:nowrap}.workspace{grid-template-columns:minmax(0,1fr) 250px}.topbar{position:static}}
+@media(max-width:850px){.topbar{height:auto;flex-wrap:wrap;padding:12px 16px}.school-head{order:3;width:100%;margin-left:66px}.top-actions{margin-left:auto}.workspace{grid-template-columns:1fr}.right-col{display:grid;grid-template-columns:1fr 1fr}.right-col .panel:last-child{grid-column:1/-1}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:14px 0}.sidebar{margin:8px 0 0}}
+@media(max-width:560px){.brand{min-width:0}.brand-icon{width:44px;height:44px;flex-basis:44px}.brand h1{font-size:21px}.brand p{font-size:9px}.user-info,.theme-toggle{display:none}.school-head{margin-left:0}.stats{gap:8px}.stat{padding:10px;gap:8px;min-height:86px}.stat-icon{width:40px;height:40px;flex-basis:40px;font-size:20px}.stat strong{font-size:20px}.stat span,.stat small{font-size:10px}.right-col{display:flex}.form-grid{grid-template-columns:1fr}.subject-list{grid-template-columns:1fr}.report{min-width:620px}.report-scroll{overflow:auto}.identity{grid-template-columns:1fr}.identity div:nth-child(even){border-left:0;padding-left:0}.page-title{flex-direction:column}}
+@media print{body{background:#fff}.topbar,.sidebar,.stats,.right-col,.page-title,.no-print{display:none!important}.app,.workspace{display:block}main{padding:0}.panel{box-shadow:none;border:0;padding:0}.report{box-shadow:none;border:0;padding:0}.report-scroll{overflow:visible}.report{min-width:0}}
+
+/* UI profesional, ikon vektor tajam, dan menu akun */
+.nav .ico{display:inline-grid;place-items:center}.nav .ico svg{width:20px;height:20px;display:block;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.theme-toggle{width:42px;height:42px;display:grid;place-items:center;padding:0;border-radius:13px;background:linear-gradient(145deg,#f4f8ff,#e3efff);box-shadow:0 3px 10px #164a8310}.theme-toggle svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.account-wrap{position:relative}.account-button{display:flex;align-items:center;gap:10px;padding:7px 10px;border:1px solid #dce7f7;border-radius:13px;background:#fff;cursor:pointer;text-align:left}.account-button:hover{background:#f4f8ff;border-color:#a9c8ef}.account-chevron{width:17px;height:17px;fill:none;stroke:#55739e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.account-menu{position:absolute;right:0;top:calc(100% + 9px);width:190px;padding:6px;background:#fff;border:1px solid #dce7f7;border-radius:13px;box-shadow:0 14px 35px #102e5925;z-index:20}.account-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:0;border-radius:8px;background:transparent;color:#24466f;text-align:left;font-size:12px;font-weight:700}.account-menu button:hover{background:#edf5ff}.account-menu button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.account-menu .logout-option{color:#d33b50}.account-menu .logout-option:hover{background:#fff0f2}
+body.dark{--ink:#e3edff;--muted:#a7bddb;--line:#314967;--pale:#172b43;--white:#14253b;--shadow:0 8px 25px #0003;background:linear-gradient(125deg,#0b1727,#11243a 55%,#0d1d30);color:#e3edff}
+body.dark .topbar,body.dark .panel,body.dark .stat,body.dark .report,body.dark .account-button,body.dark .account-menu{background:#14263c;color:#e3edff;border-color:#2c4562}
+body.dark .brand h1,body.dark .school-head strong,body.dark .user-info strong,body.dark .panel h2,body.dark .stat strong{color:#d9e9ff}
+body.dark .brand p,body.dark .school-head span,body.dark .user-info small,body.dark .stat span,body.dark .stat small{color:#a8bfdc}
+body.dark .field label{color:#b7cce8}body.dark .field input,body.dark .field select,body.dark .field textarea{background:#0e1d30;color:#e3edff;border-color:#344d6b}
+body.dark .theme-toggle{background:#263b54;color:#f8d477;border-color:#3a5270}body.dark .account-menu button{color:#dceaff}body.dark .account-menu button:hover{background:#223a55}
+body.dark .student-mini{background:#1b3450;border-color:#365475}body.dark .student-mini strong,body.dark .student-mini small{color:#c5dcfb}body.dark .tabbar{background:#1a3049}body.dark .tab{color:#d1e2fa}body.dark .btn{background:#263e59;color:#e0edff}body.dark .btn-primary{background:linear-gradient(100deg,#1686dc,#3476e7);color:#fff}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brand-icon"><svg class="tutwuri-mark" role="img" aria-label="Lambang Tut Wuri Handayani" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="#fff"/><circle cx="50" cy="50" r="42" fill="none" stroke="#174b91" stroke-width="3"/><path d="M18 57 Q31 47 43 57 Q50 62 57 57 Q69 47 82 57 L77 68 Q64 61 53 70 L50 74 L47 70 Q36 61 23 68Z" fill="#174b91"/><path d="M50 20 C42 29 43 36 50 41 C57 36 58 29 50 20Z" fill="#e7a52b"/><path d="M50 35 V57" stroke="#174b91" stroke-width="4" stroke-linecap="round"/><path d="M37 43 Q50 48 63 43" fill="none" stroke="#174b91" stroke-width="3" stroke-linecap="round"/><path d="M31 78 Q50 84 69 78" fill="none" stroke="#174b91" stroke-width="3" stroke-linecap="round"/><text x="50" y="94" text-anchor="middle" font-size="7" font-weight="700" fill="#174b91">TUT WURI</text></svg></div><div><h1>RaporKu</h1><p>Aplikasi Input e-Rapor SD<br>Mudah · Cepat · Profesional</p></div></div>
+  <div class="school-head"><strong id="headerSchool">SD NEGERI 1 MALEI</strong><span id="headerMeta">Kelas 5&nbsp; | &nbsp;Semester 2&nbsp; | &nbsp;Tahun Ajaran 2025/2026</span></div>
+  <div class="top-actions"><button class="theme-toggle" id="themeBtn" title="Ganti mode terang/gelap" aria-label="Ganti mode terang atau gelap"><svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button><div class="account-wrap"><button class="account-button" id="accountBtn" aria-haspopup="true" aria-expanded="false"><span class="user-info"><strong id="headerAdmin">Guru Kelas</strong><small>Guru Kelas</small></span><svg class="account-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="account-menu hidden" id="accountMenu"><button id="changePasswordBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></svg>Ubah Password</button><button id="logoutBtn" class="logout-option"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5m5 5H3m9-9h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>Log Out</button></div></div></div>
+</header>
+<div class="app">
+<aside class="sidebar no-print">
+  <div class="nav-label">MENU UTAMA</div>
+  <button class="nav active" data-page="dashboard"><span class="ico">⌂</span>Dashboard</button>
+  <button class="nav" data-page="subjects"><span class="ico">◧</span>Mata Pelajaran</button>
+  <button class="nav" data-page="grades"><span class="ico">▤</span>Nilai &amp; Capaian</button>
+  <button class="nav" data-page="settings"><span class="ico">⚙</span>Pengaturan Rapor</button>
+  <button class="nav" data-page="teachers"><span class="ico">♙</span>Data Guru</button>
+  <div class="nav-divider"></div><div class="nav-label">DATA &amp; DOKUMEN</div>
+  <button class="nav" data-page="backup"><span class="ico">☁</span>Backup &amp; Restore</button>
+  <button class="nav" data-page="importexport"><span class="ico">⇄</span>Ekspor / Impor</button>
+  <button class="nav" data-page="print"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-4a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v4a2 2 0 0 1-2 2h-2M7 14h10v7H7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>Cetak / PDF</button>
+  <button class="nav" data-page="students"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 20v-1.5A5.5 5.5 0 0 1 8.5 13h1A5.5 5.5 0 0 1 15 18.5V20M16 5.5a3 3 0 0 1 0 5.8M17 14a4.5 4.5 0 0 1 4 4.5V20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Data Siswa</button>
+  <div class="sidebar-foot"><span class="book-ico">♧</span><em>Pendidikan<br>adalah investasi<br>masa depan</em></div>
+</aside>
+<main>
+<section class="stats" id="stats">
+  <div class="stat"><div class="stat-icon cyan">♟</div><div><span>Total Siswa</span><strong id="statStudents">0</strong><small>Siswa tersimpan</small></div></div>
+  <div class="stat"><div class="stat-icon violet">▮</div><div><span>Mata Pelajaran</span><strong id="statSubjects">10</strong><small>Daftar mata pelajaran</small></div></div>
+  <div class="stat"><div class="stat-icon green">▦</div><div><span>Tahun Ajaran</span><strong id="statYear">2025/2026</strong><small id="statSemester">Semester 2</small></div></div>
+  <div class="stat"><div class="stat-icon orange">★</div><div><span>Kelas</span><strong id="statClass">5</strong><small id="statClassSub">Kelas 5</small></div></div>
+</section>
+<div class="workspace">
+<div class="center-col">
+<section class="panel" id="page-dashboard">
+  <div class="report-scroll"><div class="report" id="reportView">
+    <div style="display:none" aria-hidden="true"><span id="reportLogo"><svg class="tutwuri-mark" role="img" aria-label="Lambang Tut Wuri Handayani" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="#fff"/><circle cx="50" cy="50" r="42" fill="none" stroke="#174b91" stroke-width="3"/><path d="M18 57 Q31 47 43 57 Q50 62 57 57 Q69 47 82 57 L77 68 Q64 61 53 70 L50 74 L47 70 Q36 61 23 68Z" fill="#174b91"/><path d="M50 20 C42 29 43 36 50 41 C57 36 58 29 50 20Z" fill="#e7a52b"/><path d="M50 35 V57" stroke="#174b91" stroke-width="4" stroke-linecap="round"/><path d="M37 43 Q50 48 63 43" fill="none" stroke="#174b91" stroke-width="3" stroke-linecap="round"/><path d="M31 78 Q50 84 69 78" fill="none" stroke="#174b91" stroke-width="3" stroke-linecap="round"/><text x="50" y="94" text-anchor="middle" font-size="7" font-weight="700" fill="#174b91">TUT WURI</text></svg></span><span id="reportGov">PEMERINTAH KABUPATEN</span><span id="reportDept">DINAS PENDIDIKAN</span><span id="reportSchool">SD NEGERI 1 MALEI</span><span id="reportAddress">Alamat sekolah</span></div>
+    <div class="identity">
+      <div><span>Nama Murid</span><span>:</span><strong id="rName">-</strong></div><div><span>Kelas</span><span>:</span><strong id="rClass">Kelas 5</strong></div>
+      <div><span>NIS/NISN</span><span>:</span><strong id="rNis">-</strong></div><div><span>Fase</span><span>:</span><strong id="rPhase">C</strong></div>
+      <div><span>Sekolah</span><span>:</span><strong id="rSchool">SD NEGERI 1 MALEI</strong></div><div><span>Semester</span><span>:</span><strong id="rSemester">2</strong></div>
+      <div><span>Alamat</span><span>:</span><strong id="rAddress">-</strong></div><div><span>Tahun Ajaran</span><span>:</span><strong id="rYear">2025/2026</strong></div>
+    </div>
+    <div class="report-title">LAPORAN HASIL BELAJAR</div>
+    <table class="rtable"><thead><tr><th class="col-no">No</th><th class="col-subject">Mata Pelajaran</th><th class="col-score">Nilai Akhir</th><th>Capaian Kompetensi</th></tr></thead><tbody id="reportGrades"></tbody></table>
+    <table class="rtable"><thead><tr><th class="section">Kokurikuler</th></tr></thead><tbody><tr><td id="rCo" style="height:42px"></td></tr></tbody></table>
+    <table class="rtable"><thead><tr><th style="width:35px">No</th><th>Ekstrakurikuler</th><th>Keterangan</th></tr></thead><tbody id="reportExtra"></tbody></table>
+    <div class="report-two"><div class="attendance"><h4>Ketidakhadiran</h4><p>Sakit <b id="rSick">0 hari</b></p><p>Izin <b id="rPermit">0 hari</b></p><p>Tanpa Keterangan <b id="rAbsent">0 hari</b></p></div><div class="note-box"><h4>Catatan Wali Kelas</h4><div class="blank" id="rNote"></div></div></div>
+    <div class="promote" id="rPromote">Keterangan Kenaikan Kelas : Naik ke kelas 5</div>
+    <table class="rtable"><thead><tr><th>Tanggapan Orang Tua/Wali Murid</th></tr></thead><tbody><tr><td style="height:45px" id="rParent"></td></tr></tbody></table>
+    <div class="report-date" id="rReportDate"></div><div class="signature"><div>Orang Tua/Wali Murid<div class="sign-space"></div><u id="rParentName">(Nama Lengkap)</u></div><div>Kepala Sekolah<div class="sign-space"></div><u id="rPrincipal">Faisal Karamullu</u><br><span id="rPrincipalNip">NIP. 19700101 199303 1 005</span></div><div>Wali Kelas<div class="sign-space"></div><u id="rTeacher">Selfi Tawesi, S.Pd</u><br><span id="rTeacherNip">NIP. 19850512 201001 2 012</span></div></div>
+    <div class="report-footer"><span id="rFooterClass">Kelas 5 /</span><span>Halaman : 1</span></div>
+  </div></div>
+</section>
+
+<section class="panel hidden" id="page-students">
+  <div class="page-title"><div><h2>Data Siswa</h2><p>Kelola identitas peserta didik dan data rapor masing-masing.</p></div><button class="btn btn-primary" id="newStudentBtn">＋ Murid Baru</button></div>
+  <div class="form-grid">
+    <div class="field"><label>Pilih data tersimpan</label><select id="studentPicker"><option value="">— Murid baru —</option></select></div>
+    <div class="field"><label>&nbsp;</label><div class="btn-row"><button class="btn" id="loadStudentBtn">Muat Data</button><button class="btn btn-danger" id="deleteStudentBtn">Hapus Siswa</button></div></div>
+    <div class="field"><label>Nama Murid</label><input id="studentName" placeholder="Nama lengkap murid"></div>
+    <div class="field"><label>NIS / NISN</label><input id="studentNis" placeholder="Nomor induk siswa"></div>
+    <div class="field"><label>Sekolah</label><input id="studentSchool" value="SD NEGERI 1 MALEI"></div>
+    <div class="field"><label>Alamat</label><input id="studentAddress" placeholder="Desa / alamat"></div>
+    <div class="field"><label>Kelas</label><select id="studentClass"><option>Kelas 1</option><option>Kelas 2</option><option>Kelas 3</option><option>Kelas 4</option><option selected>Kelas 5</option><option>Kelas 6</option></select></div>
+    <div class="field"><label>Fase</label><select id="studentPhase"><option>A</option><option>B</option><option selected>C</option></select></div>
+    <div class="field"><label>Semester</label><select id="studentSemester"><option>1</option><option selected>2</option></select></div>
+    <div class="field"><label>Tahun Ajaran</label><input id="studentYear" value="2025/2026"></div>
+  </div>
+  <div class="btn-row"><button class="btn btn-primary" id="saveStudentBtn">▣ Simpan Data Siswa</button><button class="btn btn-outline" id="clearStudentBtn">Kosongkan Form</button></div>
+  <h3>DAFTAR SISWA TERSIMPAN</h3><div class="table-wrap"><table class="data-table"><thead><tr><th>Nama Murid</th><th>NIS/NISN</th><th>Kelas</th><th>Semester</th><th>Aksi</th></tr></thead><tbody id="studentRows"></tbody></table></div>
+</section>
+
+<section class="panel hidden" id="page-subjects">
+  <div class="page-title"><div><h2>Mata Pelajaran</h2><p>Atur daftar mata pelajaran yang muncul pada rapor.</p></div></div>
+  <div class="notice">Daftar ini digunakan untuk tabel nilai rapor. Tambahkan atau ubah nama mata pelajaran sesuai kebutuhan sekolah.</div>
+  <div class="field"><label>Nama mata pelajaran baru</label><div class="form-grid"><input id="newSubject" placeholder="Contoh: Bahasa Indonesia"><button class="btn btn-primary" id="addSubjectBtn">＋ Tambah Mata Pelajaran</button></div></div>
+  <div id="subjectList" class="subject-list"></div>
+</section>
+
+<section class="panel hidden" id="page-grades">
+  <div class="page-title"><div><h2>Nilai &amp; Capaian</h2><p>Isi nilai akhir dan deskripsi capaian kompetensi tiap mata pelajaran.</p></div></div>
+  <div class="field"><label>Pilih siswa</label><select id="gradeStudentPicker"></select></div>
+  <div id="gradeEditor"></div>
+  <div class="btn-row"><button class="btn btn-primary" id="saveGradesBtn">▣ Simpan Nilai &amp; Capaian</button></div>
+</section>
+
+<section class="panel hidden" id="page-settings">
+  <div class="page-title"><div><h2>Pengaturan Rapor</h2><p>Pengaturan bagian rapor, kehadiran, kokurikuler dan catatan.</p></div></div>
+  <div class="form-grid">
+    <div class="field"><label>Tanggal Rapor</label><input type="date" id="settingReportDate"></div>
+    <div class="field"><label>Kokurikuler</label><textarea id="settingCo" placeholder="Deskripsi kokurikuler"></textarea></div>
+    <div class="field"><label>Catatan Wali Kelas</label><textarea id="settingNote" placeholder="Catatan perkembangan murid"></textarea></div>
+    <div class="field"><label>Ekstrakurikuler 1</label><input id="settingExtra1" placeholder="Nama ekstrakurikuler"></div>
+    <div class="field"><label>Keterangan ekstrakurikuler 1</label><input id="settingExtra1Desc" placeholder="Keterangan"></div>
+    <div class="field"><label>Ekstrakurikuler 2</label><input id="settingExtra2" placeholder="Nama ekstrakurikuler"></div>
+    <div class="field"><label>Keterangan ekstrakurikuler 2</label><input id="settingExtra2Desc" placeholder="Keterangan"></div>
+    <div class="field"><label>Sakit (hari)</label><input type="number" min="0" id="settingSick" value="0"></div>
+    <div class="field"><label>Izin (hari)</label><input type="number" min="0" id="settingPermit" value="0"></div>
+    <div class="field"><label>Tanpa keterangan (hari)</label><input type="number" min="0" id="settingAbsent" value="0"></div>
+    <div class="field"><label>Keterangan kenaikan kelas</label><input id="settingPromote" value="Naik ke kelas 5"></div>
+    <div class="field"><label>Tanggapan orang tua/wali</label><textarea id="settingParent"></textarea></div>
+    <div class="field"><label>Nama orang tua/wali</label><input id="settingParentName" placeholder="Nama lengkap"></div>
+  </div>
+  <button class="btn btn-primary" id="saveSettingsBtn">Simpan Pengaturan Rapor</button>
+</section>
+
+
+
+<section class="panel hidden" id="page-teachers">
+  <div class="page-title"><div><h2>Data Guru &amp; Sekolah</h2><p>Data ini ditampilkan pada kepala rapor dan bagian tanda tangan.</p></div></div>
+  <div class="form-grid">
+    <div class="field"><label>Nama sekolah</label><input id="teacherSchool" value="SD NEGERI 1 MALEI"></div>
+    <div class="field"><label>Alamat sekolah</label><input id="teacherAddress" value="Jl. Pendidikan No. 1 Malei, Kec. Malei"></div>
+    <div class="field"><label>Kabupaten / wilayah</label><input id="teacherGov" value="PEMERINTAH KABUPATEN"></div>
+    <div class="field"><label>Instansi</label><input id="teacherDept" value="DINAS PENDIDIKAN"></div>
+    <div class="field"><label>Nama kepala sekolah</label><input id="principalName" value="Faisal Karamullu"></div>
+    <div class="field"><label>NIP kepala sekolah</label><input id="principalNip" value="19700101 199303 1 005"></div>
+    <div class="field"><label>Nama wali kelas</label><input id="teacherName" value="Selfi Tawesi, S.Pd"></div>
+    <div class="field"><label>NIP wali kelas</label><input id="teacherNip" value="19850512 201001 2 012"></div>
+    <div class="field"><label>Guru Kelas</label><input id="operatorName" value="Guru Kelas"></div>
+  </div>
+  <button class="btn btn-primary" id="saveTeacherBtn">Simpan Data Guru &amp; Sekolah</button>
+</section>
+
+<section class="panel hidden" id="page-backup">
+  <div class="page-title"><div><h2>Backup &amp; Restore</h2><p>Simpan salinan data atau pulihkan data dari berkas cadangan.</p></div></div>
+  <div class="notice">Data disimpan secara lokal pada browser/perangkat ini. Unduh backup secara berkala agar data tidak hilang saat browser dibersihkan.</div>
+  <div class="btn-row"><button class="btn btn-primary" id="backupDownload">⬇ Unduh Backup JSON</button><button class="btn btn-outline" id="backupChoose">⬆ Pulihkan dari JSON</button><input type="file" id="backupFile" accept=".json,application/json" hidden></div>
+  <h3>RINGKASAN DATA</h3><div id="backupSummary" class="notice"></div>
+</section>
+
+<section class="panel hidden" id="page-importexport">
+  <div class="page-title"><div><h2>Ekspor / Impor</h2><p>Pindahkan data siswa dan nilai melalui berkas JSON atau CSV.</p></div></div>
+  <div class="form-grid">
+    <div class="panel"><h2>Ekspor Data</h2><p class="small">Unduh seluruh data aplikasi sebagai backup JSON.</p><button class="btn btn-primary" id="exportJsonBtn">Ekspor JSON</button> <button class="btn btn-outline" id="exportCsvBtn">Ekspor Daftar Siswa CSV</button></div>
+    <div class="panel"><h2>Impor Data</h2><p class="small">Pilih backup JSON yang sebelumnya dibuat dari RaporKu.</p><div class="file-drop">Pilih berkas backup JSON<input type="file" id="importFile" accept=".json,application/json"></div></div>
+  </div>
+  <div class="notice">Impor backup mengganti data lokal saat ini. Pastikan ekspor backup terlebih dahulu jika masih membutuhkan data lama.</div>
+</section>
+
+<section class="panel hidden" id="page-print">
+  <div class="page-title"><div><h2>Cetak / PDF</h2><p>Pratinjau rapor aktif, lalu cetak atau simpan sebagai PDF.</p></div><button class="btn btn-primary" id="printNowBtn">▧ Cetak / Simpan PDF</button></div>
+  <div class="field"><label>Pilih siswa untuk dicetak</label><select id="printStudentPicker"></select></div>
+  <div class="notice">Pada jendela cetak, pilih tujuan “Save as PDF” untuk menyimpan rapor sebagai PDF.</div>
+  <div class="report-scroll" id="printReportHolder"></div>
+</section>
+</div>
+
+<aside class="right-col no-print">
+  <section class="panel"><h2><span class="heading-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z" fill="currentColor"/></svg></span>Data Siswa</h2><div class="field"><select id="dashboardStudentPicker"><option value="">Pilih atau cari nama siswa...</option></select></div>
+    <div class="student-mini"><div class="student-avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z" fill="currentColor"/></svg></div><div><strong id="miniStudentName">Nama Siswa</strong><small>NISN : <span id="miniStudentNis">-</span></small><small>Kelas : <span id="miniStudentClass">5</span></small><small>Semester : <span id="miniStudentSemester">2</span></small></div></div>
+  </section>
+
+</aside>
+</div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<div id="authGate" style="position:fixed;inset:0;z-index:100;background:#edf4ffed;display:flex;align-items:center;justify-content:center;padding:18px">
+ <div style="background:white;border:1px solid #d9e6f7;border-radius:18px;box-shadow:0 18px 55px #163f7525;width:min(420px,100%);padding:26px">
+  <div style="text-align:center;height:76px"><svg class="tutwuri-mark" role="img" aria-label="Lambang Tut Wuri Handayani" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="#fff"/><circle cx="50" cy="50" r="42" fill="none" stroke="#174b91" stroke-width="3"/><path d="M18 57 Q31 47 43 57 Q50 62 57 57 Q69 47 82 57 L77 68 Q64 61 53 70 L50 74 L47 70 Q36 61 23 68Z" fill="#174b91"/><path d="M50 20 C42 29 43 36 50 41 C57 36 58 29 50 20Z" fill="#e7a52b"/><path d="M50 35 V57" stroke="#174b91" stroke-width="4" stroke-linecap="round"/><path d="M37 43 Q50 48 63 43" fill="none" stroke="#174b91" stroke-width="3" stroke-linecap="round"/><path d="M31 78 Q50 84 69 78" fill="none" stroke="#174b91" stroke-width="3" stroke-linecap="round"/><text x="50" y="94" text-anchor="middle" font-size="7" font-weight="700" fill="#174b91">TUT WURI</text></svg></div><h2 style="text-align:center;color:#164b83;margin:8px 0">RaporKu · SD Negeri 1 Malei</h2>
+  <p style="text-align:center;color:#6b82a4;font-size:13px;line-height:1.6">Masuk menggunakan akun operator sekolah untuk menyinkronkan data rapor ke cloud.</p>
+  <div class="field"><label>Email operator</label><input id="authEmail" type="email" autocomplete="username" placeholder="nama@sekolah.sch.id"></div>
+  <div class="field"><label>Kata sandi</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Kata sandi Supabase"></div>
+  <button class="btn btn-primary" id="authLogin" style="width:100%;padding:13px">Masuk &amp; Sinkronkan</button>
+  <p id="authMessage" style="font-size:12px;color:#c53d51;line-height:1.5;margin-bottom:0"></p>
+  <p style="font-size:11px;color:#7890af;line-height:1.5">Akun dibuat oleh administrator di Supabase Authentication. Data siswa hanya dapat diakses setelah masuk.</p>
+ </div>
+</div>
+<script>
+const KEY='raporku_project_gambar2_v1';
+const SUPABASE_URL='https://ipmjbcschjedimjztulq.supabase.co';
+const SUPABASE_KEY='sb_publishable_5zkYaMU8yq1ZI6XN9WyFNg_LXd2yrP6';
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let cloudReady=false, cloudTimer=null, cloudLoading=false;
+const defaultSubjects=['Pendidikan Agama dan Budi Pekerti','Pendidikan Pancasila','Bahasa Indonesia','Matematika','IPAS','PJOK','Seni Budaya','Bahasa Inggris','Muatan Lokal','Bahasa Daerah'];
+const defaultState={students:[],subjects:defaultSubjects,activeId:'',school:{name:'SD NEGERI 1 MALEI',address:'Jl. Pendidikan No. 1 Malei, Kec. Malei',gov:'PEMERINTAH KABUPATEN',dept:'DINAS PENDIDIKAN',principal:'Faisal Karamullu',principalNip:'19700101 199303 1 005',teacher:'Selfi Tawesi, S.Pd',teacherNip:'19850512 201001 2 012',operator:'Admin'},settings:{reportDate:'',co:'',note:'',extra1:'',extra1Desc:'',extra2:'',extra2Desc:'',sick:0,permit:0,absent:0,promote:'Naik ke kelas 5',parent:'',parentName:''}};
+let state=loadState();
+function loadState(){try{return {...structuredClone(defaultState),...JSON.parse(localStorage.getItem(KEY)||'{}')};}catch(e){return structuredClone(defaultState)}}
+function saveState(){localStorage.setItem(KEY,JSON.stringify(state));refreshAll();toast(cloudReady?'Data disimpan lokal dan disinkronkan ke cloud.':'Data disimpan pada perangkat ini. Masuk untuk sinkronisasi cloud.');if(cloudReady&&!cloudLoading)scheduleCloudSave()}
+async function initCloud(){
+ const {data:{session}}=await supabaseClient.auth.getSession();
+ if(session){await enterCloud(session.user)}
+ else {el('authGate').style.display='flex'}
+ supabaseClient.auth.onAuthStateChange((event,session)=>{if(session&& !cloudReady) setTimeout(()=>enterCloud(session.user),0); if(!session){cloudReady=false;el('authGate').style.display='flex'}});
+}
+async function enterCloud(user){
+ try{
+  el('authMessage').textContent='';
+  const {data,error}=await supabaseClient.from('raporku_shared_data').select('payload').eq('id',1).maybeSingle();
+  if(error) throw error;
+  if(data&&data.payload&&Array.isArray(data.payload.students)){
+   // Cloud is the shared source after login; preserve local logo settings separately.
+   state={...structuredClone(defaultState),...data.payload};localStorage.setItem(KEY,JSON.stringify(state));refreshAll();
+  }else{
+   const {error:upErr}=await supabaseClient.from('raporku_shared_data').upsert({id:1,payload:state,updated_at:new Date().toISOString()},{onConflict:'id'});
+   if(upErr) throw upErr;
+  }
+  cloudReady=true;el('authGate').style.display='none';
+  if(el('headerAdmin'))el('headerAdmin').textContent=user.email||state.school.operator||'Guru Kelas';
+  toast('Terhubung ke Supabase. Data rapor tersinkron.');
+ }catch(err){cloudReady=false;el('authGate').style.display='flex';el('authMessage').textContent='Koneksi gagal: '+(err.message||'Periksa tabel dan kebijakan Supabase.');}
+}
+function scheduleCloudSave(){clearTimeout(cloudTimer);cloudTimer=setTimeout(async()=>{if(!cloudReady)return;try{const {error}=await supabaseClient.from('raporku_shared_data').upsert({id:1,payload:state,updated_at:new Date().toISOString()},{onConflict:'id'});if(error)throw error;}catch(e){toast('Sinkronisasi cloud gagal: '+e.message)}},700)}
+el('authLogin').onclick=async()=>{const email=el('authEmail').value.trim(),password=el('authPassword').value;if(!email||!password){el('authMessage').textContent='Masukkan email dan kata sandi.';return}el('authLogin').disabled=true;el('authLogin').textContent='Menghubungkan...';const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});el('authLogin').disabled=false;el('authLogin').textContent='Masuk & Sinkronkan';if(error){el('authMessage').textContent='Gagal masuk: '+error.message;return}await enterCloud(data.user)};
+function toast(s){const t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+function el(id){return document.getElementById(id)}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function activeStudent(){return state.students.find(s=>s.id===state.activeId)||state.students[0]||null}
+function blankStudent(){return {id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:'',nis:'',school:state.school.name,address:'',klass:'Kelas 5',phase:'C',semester:'2',year:'2025/2026',grades:{},settings:{}}}
+function studentSettings(s){return {...state.settings,...(s?.settings||{})}}
+function refreshAll(){refreshStats();refreshPickers();renderStudentRows();renderSubjects();renderGradeEditor();renderReport();renderBackupSummary()}
+function refreshStats(){el('statStudents').textContent=state.students.length;el('statSubjects').textContent=state.subjects.length;let s=activeStudent();el('statYear').textContent=s?.year||'2025/2026';el('statSemester').textContent='Semester '+(s?.semester||'2');el('statClass').textContent=(s?.klass||'Kelas 5').replace('Kelas ','');el('statClassSub').textContent=s?.klass||'Kelas 5';el('headerSchool').textContent=state.school.name;el('headerMeta').textContent=`${s?.klass||'Kelas 5'}  |  Semester ${s?.semester||'2'}  |  Tahun Ajaran ${s?.year||'2025/2026'}`;el('headerAdmin').textContent=state.school.operator||'Guru Kelas'}
+function fillSelect(id,withBlank=true){const e=el(id);if(!e)return;const old=e.value;let options=state.students.map(s=>`<option value="${escapeHtml(s.id)}">${escapeHtml(s.name||'Murid baru')} — ${escapeHtml(s.nis||'tanpa NISN')}</option>`).join('');e.innerHTML=(withBlank?'<option value="">Pilih nama siswa...</option>':'')+options;if(state.students.some(s=>s.id===old))e.value=old;else if(state.activeId&&state.students.some(s=>s.id===state.activeId))e.value=state.activeId}
+function refreshPickers(){['studentPicker','gradeStudentPicker','dashboardStudentPicker','printStudentPicker'].forEach(id=>fillSelect(id,true));const s=activeStudent();if(s){['studentPicker','gradeStudentPicker','dashboardStudentPicker','printStudentPicker'].forEach(id=>{if(el(id))el(id).value=s.id});el('miniStudentName').textContent=s.name||'Nama Siswa';el('miniStudentNis').textContent=s.nis||'-';el('miniStudentClass').textContent=(s.klass||'Kelas 5').replace('Kelas ','');el('miniStudentSemester').textContent=s.semester||'2'}else{el('miniStudentName').textContent='Nama Siswa';el('miniStudentNis').textContent='-';el('miniStudentClass').textContent='5';el('miniStudentSemester').textContent='2'}}
+function renderStudentRows(){const body=el('studentRows');if(!state.students.length){body.innerHTML='<tr><td colspan="5" class="empty">Belum ada data siswa. Klik “Murid Baru” untuk mulai.</td></tr>';return}body.innerHTML=state.students.map(s=>`<tr><td>${escapeHtml(s.name||'(Tanpa nama)')}</td><td>${escapeHtml(s.nis||'-')}</td><td>${escapeHtml(s.klass||'Kelas 5')}</td><td>${escapeHtml(s.semester||'2')}</td><td><button class="btn" data-edit-student="${s.id}">Edit</button></td></tr>`).join('');body.querySelectorAll('[data-edit-student]').forEach(b=>b.onclick=()=>loadStudent(b.dataset.editStudent))}
+function renderSubjects(){el('subjectList').innerHTML=state.subjects.map((s,i)=>`<div class="subject-item"><span class="small">${i+1}.</span><input aria-label="Nama mata pelajaran" data-subject="${i}" value="${escapeHtml(s)}"><button data-delete-subject="${i}" title="Hapus">✕</button></div>`).join('');el('subjectList').querySelectorAll('[data-subject]').forEach(inp=>inp.onchange=()=>{state.subjects[+inp.dataset.subject]=inp.value.trim();saveState()});el('subjectList').querySelectorAll('[data-delete-subject]').forEach(b=>b.onclick=()=>{if(confirm('Hapus mata pelajaran ini?')){state.subjects.splice(+b.dataset.deleteSubject,1);saveState()}})}
+function renderGradeEditor(){const s=activeStudent();const wrap=el('gradeEditor');if(!s){wrap.innerHTML='<div class="empty">Tambahkan atau pilih siswa terlebih dahulu di menu Data Siswa.</div>';return}wrap.innerHTML=state.subjects.map((sub,i)=>{let g=s.grades?.[sub]||{};return `<div class="panel" style="margin-bottom:9px;padding:12px"><div class="form-grid"><div class="field"><label>Mata Pelajaran</label><input value="${escapeHtml(sub)}" readonly></div><div class="field"><label>Nilai Akhir</label><input type="number" min="0" max="100" data-grade-score="${escapeHtml(sub)}" value="${escapeHtml(g.score||'')}" placeholder="0–100"></div><div class="field" style="grid-column:1/-1"><label>Capaian Kompetensi</label><textarea data-grade-desc="${escapeHtml(sub)}" placeholder="Deskripsikan capaian kompetensi siswa">${escapeHtml(g.desc||'')}</textarea></div></div></div>`}).join('')}
+function renderReport(){const s=activeStudent();const sc=state.school;const set=studentSettings(s);el('reportGov').textContent=sc.gov;el('reportDept').textContent=sc.dept;el('reportSchool').textContent=sc.name;el('reportAddress').textContent='Alamat : '+sc.address;const rd=set.reportDate||'';const monthNames=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];const rdParts=rd.match(/^(\d{4})-(\d{2})-(\d{2})$/);const formattedReportDate=rdParts?`${Number(rdParts[3])} ${monthNames[Number(rdParts[2])-1]} ${rdParts[1]}`:'';el('rReportDate').textContent=formattedReportDate?('Malei, '+formattedReportDate):'';if(el('settingReportDate'))el('settingReportDate').value=set.reportDate||'';el('rName').textContent=s?.name||'-';el('rNis').textContent=s?.nis||'-';el('rClass').textContent=s?.klass||'Kelas 5';el('rPhase').textContent=s?.phase||'C';el('rSchool').textContent=s?.school||sc.name;el('rSemester').textContent=s?.semester||'2';el('rAddress').textContent=s?.address||'-';el('rYear').textContent=s?.year||'2025/2026';el('rCo').textContent=set.co;el('rNote').textContent=set.note;el('rSick').textContent=(set.sick||0)+' hari';el('rPermit').textContent=(set.permit||0)+' hari';el('rAbsent').textContent=(set.absent||0)+' hari';el('rPromote').textContent='Keterangan Kenaikan Kelas : '+(set.promote||'-');el('rParent').textContent=set.parent;el('rParentName').textContent=set.parentName||'(Nama Lengkap)';el('rPrincipal').textContent=sc.principal;el('rPrincipalNip').textContent='NIP. '+sc.principalNip;el('rTeacher').textContent=sc.teacher;el('rTeacherNip').textContent='NIP. '+sc.teacherNip;el('rFooterClass').textContent=(s?.klass||'Kelas 5')+' /';el('reportGrades').innerHTML=state.subjects.map((sub,i)=>{const g=s?.grades?.[sub]||{};return `<tr><td class="col-no" style="text-align:center">${i+1}</td><td class="col-subject">${escapeHtml(sub)}</td><td class="col-score" style="text-align:center">${escapeHtml(g.score||'-')}</td><td>${escapeHtml(g.desc||'-')}</td></tr>`}).join('');el('reportExtra').innerHTML=[1,2].map((n,i)=>`<tr><td style="text-align:center">${n}</td><td>${escapeHtml(set['extra'+n]||'')}</td><td>${escapeHtml(set['extra'+n+'Desc']||'')}</td></tr>`).join('');el('printReportHolder').innerHTML=el('reportView').outerHTML}
+function renderBackupSummary(){el('backupSummary').textContent=`${state.students.length} siswa · ${state.subjects.length} mata pelajaran · Tahun ajaran ${activeStudent()?.year||'2025/2026'}. Data tersimpan di browser/perangkat ini.`}
+function switchPage(page){document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.page===page));['dashboard','students','subjects','grades','settings','teachers','backup','importexport','print'].forEach(p=>el('page-'+p).classList.toggle('hidden',p!==page));el('stats').classList.toggle('hidden',page!=='dashboard');if(page==='print')renderReport();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>switchPage(b.dataset.page)));
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));const tab=b.dataset.tab;if(tab==='grades')switchPage('grades');else if(tab==='settings')switchPage('settings');else if(tab==='preview'||tab==='report')switchPage('dashboard')});
+function clearStudentForm(){['studentName','studentNis','studentAddress'].forEach(id=>el(id).value='');el('studentSchool').value=state.school.name;el('studentClass').value='Kelas 5';el('studentPhase').value='C';el('studentSemester').value='2';el('studentYear').value='2025/2026';el('studentPicker').value=''}
+function loadStudent(id){const s=state.students.find(x=>x.id===id);if(!s)return;state.activeId=s.id;el('studentName').value=s.name||'';el('studentNis').value=s.nis||'';el('studentSchool').value=s.school||state.school.name;el('studentAddress').value=s.address||'';el('studentClass').value=s.klass||'Kelas 5';el('studentPhase').value=s.phase||'C';el('studentSemester').value=s.semester||'2';el('studentYear').value=s.year||'2025/2026';refreshAll()}
+function formStudent(){return {name:el('studentName').value.trim(),nis:el('studentNis').value.trim(),school:el('studentSchool').value.trim()||state.school.name,address:el('studentAddress').value.trim(),klass:el('studentClass').value,phase:el('studentPhase').value,semester:el('studentSemester').value,year:el('studentYear').value.trim()||'2025/2026'}}
+el('newStudentBtn').onclick=()=>{clearStudentForm();switchPage('students');el('studentName').focus()};
+el('clearStudentBtn').onclick=clearStudentForm;
+el('loadStudentBtn').onclick=()=>{if(el('studentPicker').value)loadStudent(el('studentPicker').value);else toast('Pilih siswa yang akan dimuat.')};
+el('studentPicker').onchange=()=>{if(el('studentPicker').value)loadStudent(el('studentPicker').value)};
+el('saveStudentBtn').onclick=()=>{const d=formStudent();if(!d.name){toast('Masukkan nama murid terlebih dahulu.');el('studentName').focus();return}let s=state.students.find(x=>x.id===state.activeId);if(!s){s=blankStudent();state.students.push(s);state.activeId=s.id}s={...s,...d};state.students[state.students.findIndex(x=>x.id===s.id)]=s;saveState();loadStudent(s.id);toast('Data siswa tersimpan.')};
+el('deleteStudentBtn').onclick=()=>{const id=el('studentPicker').value||state.activeId;if(!id){toast('Pilih siswa yang akan dihapus.');return}if(confirm('Hapus data siswa ini?')){state.students=state.students.filter(s=>s.id!==id);state.activeId=state.students[0]?.id||'';clearStudentForm();saveState()}};
+el('addSubjectBtn').onclick=()=>{const v=el('newSubject').value.trim();if(!v)return toast('Isi nama mata pelajaran.');if(state.subjects.includes(v))return toast('Mata pelajaran sudah ada.');state.subjects.push(v);el('newSubject').value='';saveState()};
+el('gradeStudentPicker').onchange=()=>{const s=state.students.find(x=>x.id===el('gradeStudentPicker').value);if(s){state.activeId=s.id;refreshAll()}};
+el('saveGradesBtn').onclick=()=>{const s=activeStudent();if(!s)return toast('Tambahkan siswa terlebih dahulu.');s.grades=s.grades||{};document.querySelectorAll('[data-grade-score]').forEach(inp=>{const sub=inp.dataset.gradeScore;s.grades[sub]=s.grades[sub]||{};s.grades[sub].score=inp.value});document.querySelectorAll('[data-grade-desc]').forEach(inp=>{const sub=inp.dataset.gradeDesc;s.grades[sub]=s.grades[sub]||{};s.grades[sub].desc=inp.value});saveState();toast('Nilai dan capaian tersimpan.')};
+const settingIds={reportDate:'settingReportDate',co:'settingCo',note:'settingNote',extra1:'settingExtra1',extra1Desc:'settingExtra1Desc',extra2:'settingExtra2',extra2Desc:'settingExtra2Desc',sick:'settingSick',permit:'settingPermit',absent:'settingAbsent',promote:'settingPromote',parent:'settingParent',parentName:'settingParentName'};
+function loadSettingsForm(){const set=studentSettings(activeStudent());Object.entries(settingIds).forEach(([k,id])=>el(id).value=set[k]??'')}
+el('saveSettingsBtn').onclick=()=>{const s=activeStudent();if(!s)return toast('Tambahkan siswa terlebih dahulu.');s.settings=s.settings||{};Object.entries(settingIds).forEach(([k,id])=>s.settings[k]=el(id).value);saveState();toast('Pengaturan rapor tersimpan.')};
+const teacherIds={name:'teacherSchool',address:'teacherAddress',gov:'teacherGov',dept:'teacherDept',principal:'principalName',principalNip:'principalNip',teacher:'teacherName',teacherNip:'teacherNip',operator:'operatorName'};
+function loadTeacherForm(){Object.entries(teacherIds).forEach(([k,id])=>el(id).value=state.school[k]??'')}
+el('saveTeacherBtn').onclick=()=>{Object.entries(teacherIds).forEach(([k,id])=>state.school[k]=el(id).value.trim());state.students.forEach(s=>{if(!s.school)s.school=state.school.name});saveState();toast('Data sekolah dan guru tersimpan.')};
+function download(name,data,type='application/json'){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url)}
+function backup(){return JSON.stringify(state,null,2)}
+function importBackup(file){if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);if(!obj||!Array.isArray(obj.students)||!Array.isArray(obj.subjects))throw new Error('Format tidak sesuai');if(!confirm('Impor akan mengganti data lokal saat ini. Lanjutkan?'))return;state={...structuredClone(defaultState),...obj};saveState();loadTeacherForm();loadSettingsForm();toast('Backup berhasil dipulihkan.')}catch(e){alert('Gagal membaca backup JSON. Pastikan file berasal dari RaporKu.')}};reader.readAsText(file)}
+el('backupDownload').onclick=()=>download('backup-raporku-'+new Date().toISOString().slice(0,10)+'.json',backup());
+el('backupChoose').onclick=()=>el('backupFile').click();el('backupFile').onchange=e=>importBackup(e.target.files[0]);
+el('exportJsonBtn').onclick=()=>download('raporku-data.json',backup());
+el('exportCsvBtn').onclick=()=>{const rows=[['Nama Murid','NIS/NISN','Sekolah','Alamat','Kelas','Fase','Semester','Tahun Ajaran'],...state.students.map(s=>[s.name,s.nis,s.school,s.address,s.klass,s.phase,s.semester,s.year])];const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');download('daftar-siswa-raporku.csv',csv,'text/csv;charset=utf-8')};
+el('importFile').onchange=e=>importBackup(e.target.files[0]);
+el('dashboardStudentPicker').onchange=()=>{const id=el('dashboardStudentPicker').value;if(id){state.activeId=id;refreshAll();renderReport()}};
+el('printStudentPicker').onchange=()=>{const id=el('printStudentPicker').value;if(id){state.activeId=id;refreshAll()}};
+el('printNowBtn').onclick=()=>window.print();
+const themeBtn=el('themeBtn');const themeIcon=el('themeIcon');function setTheme(dark){document.body.classList.toggle('dark',dark);themeIcon.innerHTML=dark?'<path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/>':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>';themeBtn.title=dark?'Aktifkan mode terang':'Aktifkan mode malam'}themeBtn.onclick=()=>setTheme(!document.body.classList.contains('dark'));
+const accountBtn=el('accountBtn'),accountMenu=el('accountMenu');accountBtn.onclick=()=>{const open=accountMenu.classList.toggle('hidden')===false;accountBtn.setAttribute('aria-expanded',String(open))};document.addEventListener('click',e=>{if(!e.target.closest('.account-wrap')){accountMenu.classList.add('hidden');accountBtn.setAttribute('aria-expanded','false')}});el('changePasswordBtn').onclick=async()=>{accountMenu.classList.add('hidden');const password=prompt('Masukkan password baru (minimal 6 karakter):');if(password===null)return;if(password.length<6){alert('Password minimal 6 karakter.');return}try{const {error}=await supabaseClient.auth.updateUser({password});if(error)throw error;alert('Password berhasil diubah. Gunakan password baru saat masuk berikutnya.')}catch(err){alert('Password belum dapat diubah: '+(err.message||'Terjadi kesalahan. Pastikan sudah masuk ke akun.'))}};el('logoutBtn').onclick=async()=>{accountMenu.classList.add('hidden');if(!confirm('Yakin ingin keluar dari akun?'))return;try{const {error}=await supabaseClient.auth.signOut({scope:'local'});if(error)throw error;location.reload()}catch(err){alert('Gagal keluar: '+(err.message||'Terjadi kesalahan.'))}};
+function loadSettingsIntoForm(){loadSettingsForm();loadTeacherForm()}
+function refreshAllWithForms(){refreshAll();loadSettingsIntoForm()}
+const originalRefreshAll=refreshAll;
+refreshAll=function(){originalRefreshAll();if(typeof settingIds!=='undefined')loadSettingsForm();if(typeof teacherIds!=='undefined')loadTeacherForm()}
+refreshAll();
+initCloud();
+</script>
+</body>
+</html>
