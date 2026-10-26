@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "raporsdn1malei"
+  },
+  "targets": {
+    "raporsdn1malei": {
+      "hosting": {
+        "raporsdn1malei": [
+          "raporsdn1malei"
+        ]
+      }
+    }
   }
 }
