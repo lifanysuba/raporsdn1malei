@@ -1,12 +1,7 @@
 {
   "hosting": {
-    "site": "raporsdn1malei",
     "public": ".",
-    "ignore": [
-      "firebase.json",
-      ".firebaserc",
-      ".github"
-    ],
+    "ignore": ["firebase.json", ".firebaserc", ".github"],
     "rewrites": [
       {
         "source": "**",
