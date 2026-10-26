@@ -13,3 +13,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SD_NEGERI_1_MALEI }}
           channelId: live
           projectId: sd-negeri-1-malei
+          firebaseToolsVersion: '12.9.0'
